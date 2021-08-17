@@ -1,0 +1,22 @@
+<script runat = "server" > 
+    Platform.Load("Core", "1.1.1");
+    try{
+        var Url = 'https://api-ssl.bitly.com/v4/shorten';
+        var ContentType = 'application/json';
+        var records = {
+            "long_url": "https://google.com.br",
+            "domain": "bit.ly"
+        }
+        var Payload = Stringify(records);
+        var HeaderNames = ["Authorization"];
+        var s1 = "Bearer ";
+        var access_Token = 'TOKEN HERE'
+        var HeaderValues = [s1.concat(access_Token)];
+        var Result = HTTP.Post(Url, ContentType, Payload, HeaderNames, HeaderValues);
+        var link = Platform.Function.ParseJSON(Result["Response"][0]).link;
+        Write(link);
+    }
+    catch(e){
+        Write(Stringify(e))
+    }
+</script>
